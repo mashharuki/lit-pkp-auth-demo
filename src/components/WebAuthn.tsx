@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { registerWebAuthn } from '../utils/lit';
 
 type WebAuthnStep = 'register' | 'authenticate';
 
@@ -10,6 +9,11 @@ interface WebAuthnProps {
   registerWithWebAuthn?: any;
 }
 
+/**
+ * WebAuthn コンポーネント
+ * @param param0 
+ * @returns 
+ */
 export default function WebAuthn({
   start,
   authWithWebAuthn,

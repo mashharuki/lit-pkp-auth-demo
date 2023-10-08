@@ -1,12 +1,11 @@
+import { AuthMethodType, ProviderType } from '@lit-protocol/constants';
 import {
   DiscordProvider,
-  GoogleProvider,
   EthWalletProvider,
-  WebAuthnProvider,
+  GoogleProvider,
   LitAuthClient,
-  OtpProvider,
+  WebAuthnProvider,
 } from '@lit-protocol/lit-auth-client';
-import { AuthMethodType, ProviderType } from '@lit-protocol/constants';
 import {
   AuthMethod,
   GetSessionSigsProps,
@@ -21,9 +20,10 @@ export const ORIGIN =
     ? `https://${DOMAIN}`
     : `http://${DOMAIN}:3000`;
 
+// Lit Auth client インスタンスを生成
 export const litAuthClient: LitAuthClient = new LitAuthClient({
   litRelayConfig: {
-    relayApiKey: 'test-api-key',
+    relayApiKey: process.env.NEXT_PUBLIC_RELAY_API_KEY,
   },
   litOtpConfig: {
     baseUrl: 'https://auth-api.litgateway.com',
@@ -115,6 +115,7 @@ export async function authenticateWithEthWallet(
 
 /**
  * Register new WebAuthn credential
+ * ✨ very important
  */
 export async function registerWebAuthn(): Promise<IRelayPKP> {
   const provider = litAuthClient.initProvider<WebAuthnProvider>(
@@ -129,6 +130,7 @@ export async function registerWebAuthn(): Promise<IRelayPKP> {
   if (response.status !== 'Succeeded') {
     throw new Error('Minting failed');
   }
+  // RealyPKP型のオブジェクトを生成
   const newPKP: IRelayPKP = {
     tokenId: response.pkpTokenId,
     publicKey: response.pkpPublicKey,
@@ -157,12 +159,13 @@ export async function authenticateWithWebAuthn(): Promise<
  * Send OTP code to user
  */
 export async function sendOTPCode(emailOrPhone: string) {
-  const otpProvider = litAuthClient.initProvider<OtpProvider>(
-    ProviderType.Otp,
+  const otpProvider = litAuthClient.initProvider<any>(
+    ProviderType.StytchOtp,
     {
       userId: emailOrPhone,
     } as unknown as ProviderOptions
   );
+  // send OtpCode
   const status = await otpProvider.sendOtpCode();
   return status;
 }
@@ -173,13 +176,14 @@ export async function sendOTPCode(emailOrPhone: string) {
 export async function authenticateWithOTP(
   code: string
 ): Promise<AuthMethod | undefined> {
-  const otpProvider = litAuthClient.getProvider(ProviderType.Otp);
+  const otpProvider = litAuthClient.getProvider(ProviderType.StytchOtp);
   const authMethod = await otpProvider?.authenticate({ code });
   return authMethod;
 }
 
 /**
  * Get auth method object by validating Stytch JWT
+ * ✨ Stytch経由で認証する時のメソッド very important
  */
 export async function authenticateWithStytch(
   accessToken: string,
@@ -207,6 +211,7 @@ export async function getSessionSigs({
 }): Promise<SessionSigs> {
   const provider = getProviderByAuthMethod(authMethod);
   if (provider) {
+    // get sessionSigs info
     const sessionSigs = await provider.getSessionSigs({
       pkpPublicKey,
       authMethod,
@@ -232,6 +237,7 @@ export async function updateSessionSigs(
  */
 export async function getPKPs(authMethod: AuthMethod): Promise<IRelayPKP[]> {
   const provider = getProviderByAuthMethod(authMethod);
+  // get PKP infos
   const allPKPs = await provider.fetchPKPsThroughRelayer(authMethod);
   return allPKPs;
 }
@@ -282,8 +288,6 @@ function getProviderByAuthMethod(authMethod: AuthMethod) {
       return litAuthClient.getProvider(ProviderType.EthWallet);
     case AuthMethodType.WebAuthn:
       return litAuthClient.getProvider(ProviderType.WebAuthn);
-    case AuthMethodType.OTP:
-      return litAuthClient.getProvider(ProviderType.Otp);
     case AuthMethodType.StytchOtp:
       return litAuthClient.getProvider(ProviderType.StytchOtp);
     default:

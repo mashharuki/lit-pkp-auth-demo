@@ -1,7 +1,6 @@
+import { AuthMethod, IRelayPKP } from '@lit-protocol/types';
 import { useCallback, useState } from 'react';
-import { AuthMethod } from '@lit-protocol/types';
 import { getPKPs, mintPKP } from '../utils/lit';
-import { IRelayPKP } from '@lit-protocol/types';
 
 export default function useAccounts() {
   const [accounts, setAccounts] = useState<IRelayPKP[]>([]);
@@ -42,8 +41,9 @@ export default function useAccounts() {
       setLoading(true);
       setError(undefined);
       try {
+        // mint PKP
         const newPKP = await mintPKP(authMethod);
-        // console.log('createAccount pkp: ', newPKP);
+        console.log('createAccount pkp: ', newPKP);
         setAccounts(prev => [...prev, newPKP]);
         setCurrentAccount(newPKP);
       } catch (err) {

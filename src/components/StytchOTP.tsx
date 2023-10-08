@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
 import { useStytch } from '@stytch/nextjs';
+import { useState } from 'react';
 
 interface StytchOTPProps {
   authWithStytch: any;
@@ -21,6 +21,10 @@ const StytchOTP = ({ authWithStytch, setView }: StytchOTPProps) => {
 
   const stytchClient = useStytch();
 
+  /**
+   * sendPasscode methos
+   * @param event 
+   */
   async function sendPasscode(event: any) {
     event.preventDefault();
     setLoading(true);
@@ -36,11 +40,16 @@ const StytchOTP = ({ authWithStytch, setView }: StytchOTPProps) => {
     }
   }
 
+  /**
+   * authenticate method
+   * @param event 
+   */
   async function authenticate(event: any) {
     event.preventDefault();
     setLoading(true);
     setError(undefined);
     try {
+      // 認証
       const response = await stytchClient.otps.authenticate(code, methodId, {
         session_duration_minutes: 60,
       });

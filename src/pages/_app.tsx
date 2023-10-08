@@ -2,12 +2,13 @@ import { StytchProvider } from '@stytch/nextjs';
 import { createStytchUIClient } from '@stytch/nextjs/ui';
 import { AppProps } from 'next/app';
 import { Albert_Sans } from 'next/font/google';
-import Image from 'next/image';
 import { WagmiConfig, configureChains, createClient } from 'wagmi';
 import { goerli, mainnet, optimism } from 'wagmi/chains';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { publicProvider } from 'wagmi/providers/public';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import '../styles/globals.css';
 
 const { provider, chains } = configureChains(
@@ -49,30 +50,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <StytchProvider stytch={stytch}>
       <WagmiConfig client={client}>
-        <header>
-          <Image src="/lit.svg" alt="Lit logo" width={32} height={32}></Image>
-          <a
-            href="https://developer.litprotocol.com/?ref=demo.getlit.dev"
-            target="_blank"
-            rel="noopener nofollow"
-            className="lit-cta"
-          >
-            Build on Lit
-          </a>
-        </header>
+        <Header/>
         <main className={font.className}>
           <Component {...pageProps} />
         </main>
-        <footer>
-          <a
-            href="https://github.com/LIT-Protocol/pkp-social-auth-example"
-            target="_blank"
-            rel="noopener nofollow"
-            className="footer-link"
-          >
-            View the source code
-          </a>
-        </footer>
+        <Footer/>
       </WagmiConfig>
     </StytchProvider>
   );

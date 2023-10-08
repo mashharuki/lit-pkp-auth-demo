@@ -9,6 +9,11 @@ interface AccountSelectionProp {
   error?: Error;
 }
 
+/**
+ * AccountSelection コンポーネント
+ * @param param0 
+ * @returns 
+ */
 export default function AccountSelection({
   accounts,
   setCurrentAccount,

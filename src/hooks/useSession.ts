@@ -1,10 +1,12 @@
-import { useCallback, useState } from 'react';
-import { AuthMethod } from '@lit-protocol/types';
-import { getSessionSigs } from '../utils/lit';
 import { LitAbility, LitActionResource } from '@lit-protocol/auth-helpers';
-import { IRelayPKP } from '@lit-protocol/types';
-import { SessionSigs } from '@lit-protocol/types';
+import { AuthMethod, IRelayPKP, SessionSigs } from '@lit-protocol/types';
+import { useCallback, useState } from 'react';
+import { getSessionSigs } from '../utils/lit';
 
+/**
+ * useSession hooks
+ * @returns 
+ */
 export default function useSession() {
   const [sessionSigs, setSessionSigs] = useState<SessionSigs>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -14,7 +16,10 @@ export default function useSession() {
    * Generate session sigs and store new session data
    */
   const initSession = useCallback(
-    async (authMethod: AuthMethod, pkp: IRelayPKP): Promise<void> => {
+    async (
+      authMethod: AuthMethod, 
+      pkp: IRelayPKP
+    ): Promise<void> => {
       setLoading(true);
       setError(undefined);
       try {

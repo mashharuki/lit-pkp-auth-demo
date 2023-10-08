@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import AuthMethods from './AuthMethods';
 import EmailSMSAuth from './EmailSMSAuth';
+import StytchOTP from './StytchOTP';
 import WalletMethods from './WalletMethods';
 import WebAuthn from './WebAuthn';
-import StytchOTP from './StytchOTP';
 
 interface LoginProps {
   handleGoogleLogin: () => Promise<void>;
@@ -19,6 +19,11 @@ interface LoginProps {
 
 type AuthView = 'default' | 'email' | 'phone' | 'wallet' | 'webauthn';
 
+/**
+ * LoginMethods コンポーネント
+ * @param param0 
+ * @returns 
+ */
 export default function LoginMethods({
   handleGoogleLogin,
   handleDiscordLogin,

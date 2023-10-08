@@ -6,6 +6,11 @@ interface AuthMethodsProps {
   setView: React.Dispatch<React.SetStateAction<string>>;
 }
 
+/**
+ * AuthMrthods コンポーネント
+ * @param param0 
+ * @returns 
+ */
 const AuthMethods = ({
   handleGoogleLogin,
   handleDiscordLogin,

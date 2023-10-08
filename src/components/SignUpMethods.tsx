@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import AuthMethods from './AuthMethods';
 import EmailSMSAuth from './EmailSMSAuth';
+import StytchOTP from './StytchOTP';
 import WalletMethods from './WalletMethods';
 import WebAuthn from './WebAuthn';
-import StytchOTP from './StytchOTP';
 
 interface SignUpProps {
   handleGoogleLogin: () => Promise<void>;
@@ -20,6 +20,11 @@ interface SignUpProps {
 
 type AuthView = 'default' | 'email' | 'phone' | 'wallet' | 'webauthn';
 
+/**
+ * SignUpMethods コンポーネント
+ * @param param0 
+ * @returns 
+ */
 export default function SignUpMethods({
   handleGoogleLogin,
   handleDiscordLogin,

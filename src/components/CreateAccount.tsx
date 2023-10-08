@@ -3,6 +3,11 @@ interface CreateAccountProp {
   error?: Error;
 }
 
+/**
+ * CreateAccount コンポーネント
+ * @param param0 
+ * @returns 
+ */
 export default function CreateAccount({ signUp, error }: CreateAccountProp) {
   return (
     <div className="container">
@@ -18,7 +23,10 @@ export default function CreateAccount({ signUp, error }: CreateAccountProp) {
           credentials. Create one today.
         </p>
         <div className="buttons-container">
-          <button onClick={signUp} className="btn btn--primary">
+          <button 
+            onClick={signUp} 
+            className="btn btn--primary"
+          >
             Sign up
           </button>
         </div>
