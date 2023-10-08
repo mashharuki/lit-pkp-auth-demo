@@ -1,14 +1,14 @@
-import { AppProps } from 'next/app';
-import '../styles/globals.css';
-import { WagmiConfig, createClient, configureChains } from 'wagmi';
-import { goerli, mainnet, optimism } from 'wagmi/chains';
-import { publicProvider } from 'wagmi/providers/public';
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { StytchProvider } from '@stytch/nextjs';
 import { createStytchUIClient } from '@stytch/nextjs/ui';
+import { AppProps } from 'next/app';
 import { Albert_Sans } from 'next/font/google';
 import Image from 'next/image';
+import { WagmiConfig, configureChains, createClient } from 'wagmi';
+import { goerli, mainnet, optimism } from 'wagmi/chains';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { publicProvider } from 'wagmi/providers/public';
+import '../styles/globals.css';
 
 const { provider, chains } = configureChains(
   [mainnet, goerli, optimism],
@@ -40,6 +40,11 @@ const stytch = createStytchUIClient(
 
 const font = Albert_Sans({ subsets: ['latin'] });
 
+/**
+ * MyApp Component
+ * @param param0 
+ * @returns 
+ */
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <StytchProvider stytch={stytch}>

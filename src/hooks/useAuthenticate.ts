@@ -1,18 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
 import {
-  isSignInRedirect,
   getProviderFromUrl,
+  isSignInRedirect,
 } from '@lit-protocol/lit-auth-client';
 import { AuthMethod } from '@lit-protocol/types';
+import { useCallback, useEffect, useState } from 'react';
+import { useConnect } from 'wagmi';
 import {
-  authenticateWithGoogle,
   authenticateWithDiscord,
   authenticateWithEthWallet,
-  authenticateWithWebAuthn,
+  authenticateWithGoogle,
   authenticateWithOTP,
   authenticateWithStytch,
+  authenticateWithWebAuthn,
 } from '../utils/lit';
-import { useConnect } from 'wagmi';
 
 export default function useAuthenticate(redirectUri?: string) {
   const [authMethod, setAuthMethod] = useState<AuthMethod>();
