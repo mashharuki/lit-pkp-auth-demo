@@ -23,14 +23,17 @@ export const ORIGIN =
 // Lit Auth client インスタンスを生成
 export const litAuthClient: LitAuthClient = new LitAuthClient({
   litRelayConfig: {
+    relayUrl: `https://${DOMAIN}`,
     relayApiKey: process.env.NEXT_PUBLIC_RELAY_API_KEY,
   },
+  /*
   litOtpConfig: {
     baseUrl: 'https://auth-api.litgateway.com',
     port: '443',
     startRoute: '/api/otp/start',
     checkRoute: '/api/otp/check',
   },
+  */
 });
 
 export const litNodeClient = litAuthClient.litNodeClient;
